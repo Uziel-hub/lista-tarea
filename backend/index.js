@@ -4,18 +4,18 @@ const PORT = 3000;
 
 app.use(express.json());
 
-// Simulación de base de datos (en memoria)
+
 let tareas = [
   { id: 1, texto: "Aprender Express", completada: false },
   { id: 2, texto: "Crear una lista de tareas", completada: true }
 ];
 
-// ✅ GET /api/tasks - Obtener todas las tareas
+
 app.get('/api/tasks', (req, res) => {
   res.json(tareas);
 });
 
-// ✅ POST /api/tasks - Crear nueva tarea
+
 app.post('/api/tasks', (req, res) => {
   const { texto } = req.body;
 
@@ -33,7 +33,7 @@ app.post('/api/tasks', (req, res) => {
   res.status(201).json(nuevaTarea);
 });
 
-// ✅ PUT /api/tasks/:id - Actualizar una tarea existente
+
 app.put('/api/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const { texto, completada } = req.body;
@@ -49,7 +49,7 @@ app.put('/api/tasks/:id', (req, res) => {
   res.json(tarea);
 });
 
-// ✅ DELETE /api/tasks/:id - Eliminar una tarea
+
 app.delete('/api/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const index = tareas.findIndex(t => t.id === id);
