@@ -4,17 +4,14 @@ const PORT = 3000;
 
 app.use(express.json());
 
-
 let tareas = [
   { id: 1, texto: "Aprender Express", completada: false },
   { id: 2, texto: "Crear una lista de tareas", completada: true }
 ];
 
-
 app.get('/api/tasks', (req, res) => {
   res.json(tareas);
 });
-
 
 app.post('/api/tasks', (req, res) => {
   const { texto } = req.body;
@@ -33,7 +30,6 @@ app.post('/api/tasks', (req, res) => {
   res.status(201).json(nuevaTarea);
 });
 
-
 app.put('/api/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const { texto, completada } = req.body;
@@ -49,7 +45,6 @@ app.put('/api/tasks/:id', (req, res) => {
   res.json(tarea);
 });
 
-
 app.delete('/api/tasks/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const index = tareas.findIndex(t => t.id === id);
@@ -62,6 +57,15 @@ app.delete('/api/tasks/:id', (req, res) => {
   res.json({ mensaje: "Tarea eliminada", tarea: tareaEliminada });
 });
 
+app.use((req, res, next) => {
+  res.status(404).json({ error: 'Ruta no encontrada' });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack); 
+  res.status(500).json({ error: 'Algo salió mal en el servidor' });
+});
+
 app.listen(PORT, () => {
-  console.log(`Servidor: http://localhost:${PORT}`);
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
